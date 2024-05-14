@@ -45,7 +45,7 @@ MOUTH_TRAJ = interpolate()
 
 class ObiMovement():
   def __init__(self, my_bowlno):
-    self.robot = obi.Obi('/dev/ttyUSB0')
+    self.robot = obi.Obi('/dev/ttyUSB0') # run sudo chmod a+rw /dev/ttyUSB0
     self.speed = 6000
     self.accel = 16000
     self.mouthpos = MOUTH_POS
@@ -92,6 +92,8 @@ class ObiMovement():
       self.robot.ExecuteOnTheFlyPath()
       self.robot.WaitForCMUResponse()
       self.stage += 1
+      if self.stage == NUM_STEPS + 1:
+        time.sleep(2)
 
   def decrease_stage(self):
     if self.stage in range(3, NUM_STEPS + 2):
